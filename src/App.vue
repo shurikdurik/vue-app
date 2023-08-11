@@ -4,6 +4,8 @@
     <hr>
     <TodoList 
       v-bind:todos="todos"
+      @remove-todo="removeTodo"
+      @toggle-todo="toggleTodo"
     />
   </div>
 </template>
@@ -23,6 +25,19 @@ export default {
   },
   components: {
     TodoList
+  },
+  methods: {
+    removeTodo(id) {
+      this.todos = this.todos.filter((todo) => todo.id !== id)
+    },
+    toggleTodo(id) {
+      this.todos = this.todos.map(todo => {
+      if (todo.id === id) {
+        return { ...todo, completed: !todo.completed };
+      }
+      return todo;
+    });
+    }
   }
 }
 </script>
