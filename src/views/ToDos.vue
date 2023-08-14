@@ -1,38 +1,45 @@
 <template>
     <div>
-      <h2>Todo app</h2>
       <router-link to="/">Home</router-link>
       <AddTodo 
         @add-todo="addTodo"
       />
       <hr>
-      <TodoList 
+      <Loader v-if="loading"/>
+      <TodoList
+        v-else-if="todos.length"
         v-bind:todos="todos"
         @remove-todo="removeTodo"
         @toggle-todo="toggleTodo"
       />
+      <p v-else>No todos!</p>
     </div>
   </template>
 
 <script>
 import TodoList from '@/components/TodoList'
-import AddTodo from '@/components/AddTodo.vue'
+import AddTodo from '@/components/AddTodo'
+import Loader from '@/components/Loader'
+
 export default {
   name: 'App',
   data() {
     return {
-      todos: []
+      todos: [],
+      loading: true,
     }
   },
   components: {
     TodoList,
-    AddTodo
+    AddTodo,
+    Loader,
   },
   mounted() {
     fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
       .then(response => response.json())
       .then(json => {
         this.todos = json
+        this.loading = false
       })
   },
   methods: {
