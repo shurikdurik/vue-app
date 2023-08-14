@@ -28,7 +28,7 @@
     }
 </script>
 
-<style>
+<style scoped>
     form {
         display: flex;
     }

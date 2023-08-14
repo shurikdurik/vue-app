@@ -20,16 +20,19 @@ export default {
   name: 'App',
   data() {
     return {
-      todos: [
-        {id: 1, title: "Buy milk", completed: false},
-        {id: 2, title: "Buy bread", completed: false},
-        {id: 3, title: "Buy eggs", completed: false}
-      ]
+      todos: []
     }
   },
   components: {
     TodoList,
     AddTodo
+  },
+  mounted() {
+    fetch('https://jsonplaceholder.typicode.com/todos?_limit=10')
+      .then(response => response.json())
+      .then(json => {
+        this.todos = json
+      })
   },
   methods: {
     removeTodo(id) {
