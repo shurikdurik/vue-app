@@ -1,6 +1,9 @@
 <template>
   <div id="app">
     <h1>Todo app</h1>
+    <AddTodo 
+      @add-todo="addTodo"
+    />
     <hr>
     <TodoList 
       v-bind:todos="todos"
@@ -12,6 +15,7 @@
 
 <script>
 import TodoList from '@/components/TodoList'
+import AddTodo from '@/components/AddTodo.vue'
 export default {
   name: 'App',
   data() {
@@ -24,7 +28,8 @@ export default {
     }
   },
   components: {
-    TodoList
+    TodoList,
+    AddTodo
   },
   methods: {
     removeTodo(id) {
@@ -37,6 +42,9 @@ export default {
       }
       return todo;
     });
+    },
+    addTodo(newTodo) {
+      this.todos.push(newTodo)
     }
   }
 }
